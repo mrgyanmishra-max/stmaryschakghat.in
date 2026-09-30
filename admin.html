@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Admin Panel | Saint Mary H.S. School</title>
+<link rel="icon" href="images/School logo.jpeg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:linear-gradient(135deg,#4c1d95,#1e1b4b);min-height:100vh;color:#1f2937}
+img{max-width:100%;display:block}
+a{text-decoration:none}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#fff;padding:50px 35px 40px;border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.5);width:100%;max-width:420px;text-align:center;position:relative}
+.login-logo{width:100px;height:100px;border-radius:15px;overflow:hidden;border:4px solid #c9a227;margin:-80px auto 18px;background:#fff;box-shadow:0 10px 30px rgba(76,29,149,.3)}
+.login-logo img{width:100%;height:100%;object-fit:cover}
+.login-box h2{font-family:'Playfair Display',serif;color:#4c1d95;font-size:26px;margin-bottom:6px}
+.login-box>p{color:#64748b;font-size:13px;margin-bottom:30px}
+.inp-g{position:relative;margin-bottom:16px}
+.inp-g i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:15px}
+.inp-g input{width:100%;padding:14px 16px 14px 45px;border:2px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:inherit;outline:none;transition:.3s}
+.inp-g input:focus{border-color:#c9a227;box-shadow:0 0 0 4px rgba(201,162,39,.15)}
+.btn{padding:13px 30px;border-radius:8px;font-weight:600;transition:.3s;border:none;cursor:pointer;font-size:15px;font-family:inherit;background:linear-gradient(135deg,#4c1d95,#6d28d9);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(76,29,149,.4)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-full{width:100%}
+.btn-sm{padding:8px 14px;font-size:13px;border-radius:6px}
+.btn-gold{background:linear-gradient(135deg,#c9a227,#a8861f)}
+.btn-gold:hover{box-shadow:0 10px 25px rgba(201,162,39,.4)}
+.btn-red{background:linear-gradient(135deg,#dc2626,#b91c1c)}
+.btn-red:hover{box-shadow:0 10px 25px rgba(220,38,38,.4)}
+.btn-blue{background:linear-gradient(135deg,#0ea5e9,#0284c7)}
+.btn-blue:hover{box-shadow:0 10px 25px rgba(14,165,233,.4)}
+.btn-gray{background:linear-gradient(135deg,#94a3b8,#64748b)}
+.err-msg{color:#dc2626;font-size:13px;margin-top:12px;padding:10px 14px;border-radius:8px;background:#fef2f2;border:1px solid #fecaca;display:none;font-weight:500;text-align:left}
+.err-msg.show{display:block;animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.back-link{display:inline-block;margin-top:22px;color:#64748b;font-size:13.5px;transition:.3s}
+.back-link:hover{color:#4c1d95}
+.panel{display:none;min-height:100vh;background:#f1f5f9}
+.panel.on{display:block}
+.panel-hd{background:linear-gradient(135deg,#4c1d95,#6d28d9);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(76,29,149,.3);border-bottom:3px solid #c9a227;position:sticky;top:0;z-index:100}
+.panel-hd-in{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;max-width:1300px;margin:0 auto;padding:0 20px}
+.panel-logo{display:flex;align-items:center;gap:12px}
+.panel-logo img{width:48px;height:48px;border-radius:10px;border:2px solid #c9a227;object-fit:cover}
+.panel-logo h2{font-family:'Playfair Display',serif;font-size:18px}
+.panel-logo p{font-size:11.5px;opacity:.85}
+.panel-acts{display:flex;gap:10px;flex-wrap:wrap}
+.tabs{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06);border-bottom:3px solid #c9a227;overflow-x:auto;position:sticky;top:80px;z-index:99}
+.tabs-in{display:flex;gap:6px;padding:10px 20px;white-space:nowrap;max-width:1300px;margin:0 auto}
+.tab-b{background:transparent;border:none;padding:12px 20px;font-size:14px;font-weight:600;color:#64748b;cursor:pointer;border-radius:10px;display:inline-flex;align-items:center;gap:8px;font-family:inherit;transition:.3s}
+.tab-b:hover{background:#faf5ff;color:#4c1d95}
+.tab-b.on{background:linear-gradient(135deg,#4c1d95,#6d28d9);color:#fff;box-shadow:0 6px 18px rgba(76,29,149,.3)}
+.main{max-width:1300px;margin:0 auto;padding:30px 20px 80px}
+.tab-p{display:none}
+.tab-p.on{display:block;animation:fade .4s}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.p-hd{margin-bottom:25px}
+.p-hd h3{font-family:'Playfair Display',serif;color:#4c1d95;font-size:24px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.p-hd p{color:#64748b;font-size:14px}
+.add-card{background:#fff;padding:26px;border-radius:15px;box-shadow:0 6px 25px rgba(76,29,149,.08);margin-bottom:25px;border:1px solid #e2e8f0}
+.add-card h4{color:#4c1d95;font-size:16px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;padding:12px 15px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14.5px;font-family:inherit;outline:none;transition:.3s;background:#fff}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#c9a227;box-shadow:0 0 0 3px rgba(201,162,39,.15)}
+.help-box{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left:5px solid #c9a227;padding:16px 20px;border-radius:10px;margin-bottom:20px}
+.help-box h4{color:#a8861f;font-size:14px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.help-box ol{padding-left:20px;color:#4b5563;font-size:13px;line-height:1.8}
+.help-box code{background:#fff;padding:2px 6px;border-radius:4px;font-size:12px;color:#dc2626}
+.items{display:grid;gap:14px}
+.item-row{display:flex;align-items:center;gap:16px;background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 15px rgba(76,29,149,.08);border:1px solid #e2e8f0;transition:.3s}
+.item-row:hover{box-shadow:0 8px 25px rgba(76,29,149,.15);transform:translateY(-2px)}
+.item-thumb{width:110px;height:75px;object-fit:cover;border-radius:10px;flex-shrink:0;border:2px solid #e9d5ff}
+.item-info{flex:1;min-width:0}
+.item-info h4{color:#4c1d95;font-size:15px;margin-bottom:5px;font-weight:600}
+.item-info p{color:#64748b;font-size:13px;word-break:break-all;line-height:1.5}
+.grid-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.item-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 15px rgba(76,29,149,.08);border:1px solid #e2e8f0;transition:.3s}
+.item-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(76,29,149,.15)}
+.item-card img{width:100%;height:170px;object-fit:cover}
+.item-card-b{padding:14px;display:flex;flex-direction:column;gap:10px}
+.item-card-b p{font-size:13.5px;color:#1f2937;font-weight:500;word-break:break-all}
+.empty{text-align:center;padding:40px;color:#94a3b8;font-style:italic;background:#fff;border-radius:12px;border:2px dashed #e2e8f0}
+.loading{text-align:center;padding:20px;color:#4c1d95;font-weight:500}
+.toast{position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#059669,#047857);color:#fff;padding:14px 22px;border-radius:10px;box-shadow:0 10px 30px rgba(5,150,105,.4);font-weight:500;z-index:9999;display:none;animation:slideIn .3s;max-width:320px}
+.toast.err{background:linear-gradient(135deg,#dc2626,#b91c1c)}
+@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,10,80,.75);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);overflow-y:auto}
+.modal-overlay.on{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:30px;max-width:520px;width:100%;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:modalIn .3s}
+@keyframes modalIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-close{position:absolute;top:15px;right:15px;width:38px;height:38px;border-radius:50%;border:none;background:#f3f4f6;color:#4c1d95;cursor:pointer;font-size:16px;transition:.3s}
+.modal-close:hover{background:#dc2626;color:#fff;transform:rotate(90deg)}
+.modal-box h3{color:#4c1d95;font-family:'Playfair Display',serif;font-size:22px;margin-bottom:10px;padding-right:40px}
+.modal-box .mdate{color:#a8861f;font-size:13px;font-weight:600;margin-bottom:18px;display:block}
+.modal-box .mdesc{color:#374151;font-size:15px;line-height:1.8;white-space:pre-wrap;margin-bottom:15px}
+.modal-box .mpdf{display:inline-block;padding:12px 22px;background:linear-gradient(135deg,#c9a227,#a8861f);color:#fff;border-radius:8px;font-weight:600;margin-top:10px;transition:.3s}
+.modal-box .mpdf:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(201,162,39,.4)}
+@media(max-width:768px){
+.panel-logo h2{font-size:15px}.panel-logo p{font-size:10px}.panel-logo img{width:40px;height:40px}
+.panel-hd-in{padding:0 15px}.main{padding:20px 15px 60px}
+.tabs-in{padding:8px 15px}.tab-b{padding:10px 15px;font-size:13px}
+.item-row{flex-direction:column;align-items:stretch;text-align:center}
+.item-thumb{width:100%;height:180px;margin:0 auto}
+.p-hd h3{font-size:19px}
+.modal-box{padding:22px 18px}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="login-wrap" id="loginWrap">
+<div class="login-box">
+<div class="login-logo"><img src="images/School logo.jpeg" alt="Logo"></div>
+<h2>Admin Login</h2>
+<p>Saint Mary Higher Secondary School</p>
+<form id="loginForm" autocomplete="off">
+<div class="inp-g"><i class="fas fa-user"></i><input type="text" id="username" placeholder="Username" required autocomplete="off" spellcheck="false"></div>
+<div class="inp-g"><i class="fas fa-lock"></i><input type="password" id="password" placeholder="Password" required autocomplete="new-password"></div>
+<button type="submit" class="btn btn-full" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+<p class="err-msg" id="errMsg"></p>
+</form>
+<a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Website</a>
+</div>
+</div>
+
+<div class="panel" id="panel">
+<div class="panel-hd">
+<div class="panel-hd-in">
+<div class="panel-logo">
+<img src="images/School logo.jpeg" alt="Logo">
+<div><h2>Admin Panel</h2><p>Saint Mary H.S. School, Chakghat</p></div>
+</div>
+<div class="panel-acts">
+<a href="index.html" target="_blank" class="btn btn-sm btn-gold"><i class="fas fa-eye"></i> View Website</a>
+<button class="btn btn-sm btn-red" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+</div>
+</div>
+</div>
+
+<div class="tabs">
+<div class="tabs-in">
+<button class="tab-b on" data-tab="sliderTab"><i class="fas fa-images"></i> Slider</button>
+<button class="tab-b" data-tab="galleryTab"><i class="fas fa-photo-video"></i> Gallery</button>
+<button class="tab-b" data-tab="notifTab"><i class="fas fa-bell"></i> Notifications</button>
+<button class="tab-b" data-tab="tickerTab"><i class="fas fa-newspaper"></i> Latest News</button>
+<button class="tab-b" data-tab="contactTab"><i class="fas fa-address-book"></i> Contact</button>
+</div>
+</div>
+
+<div class="main">
+
+<section class="tab-p on" id="sliderTab">
+<div class="p-hd"><h3><i class="fas fa-images"></i> Slider Images</h3><p>Homepage ki sliding images — G-Drive public link se add karo</p></div>
+<div class="help-box">
+<h4><i class="fas fa-info-circle"></i> G-Drive Link Kaise Lein:</h4>
+<ol>
+<li>Image Google Drive pe upload karo</li>
+<li>Right-click → Share → <b>"Anyone with the link"</b></li>
+<li>Link copy karo (jaise <code>https://drive.google.com/file/d/FILE_ID/view</code>)</li>
+<li>Yahan paste karo — automatic convert ho jayega ✅</li>
+</ol>
+</div>
+<div class="add-card">
+<h4><i class="fas fa-plus-circle"></i> Naya Slide Add Karo</h4>
+<div class="field"><label>Title (bada text)</label><input type="text" id="slideTitle" placeholder="e.g. Welcome to Saint Mary"></div>
+<div class="field"><label>Subtitle (chhota text)</label><input type="text" id="slideSubtitle" placeholder="e.g. Best School in Chakghat Region"></div>
+<div class="field"><label>Image Link (G-Drive)</label><input type="text" id="slideImage" placeholder="https://drive.google.com/file/d/..."></div>
+<button class="btn" onclick="addSlide()"><i class="fas fa-save"></i> Save Slide</button>
+</div>
+<div class="items" id="sliderList"></div>
+</section>
+
+<section class="tab-p" id="galleryTab">
+<div class="p-hd"><h3><i class="fas fa-photo-video"></i> Gallery Photos</h3><p>Gallery mein photos add/delete karo</p></div>
+<div class="add-card">
+<h4><i class="fas fa-plus-circle"></i> Nayi Photo Add Karo</h4>
+<div class="field"><label>Caption</label><input type="text" id="galCaption" placeholder="e.g. Annual Function 2026"></div>
+<div class="field"><label>Image Link (G-Drive)</label><input type="text" id="galImage" placeholder="https://drive.google.com/file/d/..."></div>
+<button class="btn" onclick="addGallery()"><i class="fas fa-save"></i> Save Photo</button>
+</div>
+<div class="grid-list" id="galleryList"></div>
+</section>
+
+<section class="tab-p" id="notifTab">
+<div class="p-hd"><h3><i class="fas fa-bell"></i> Notifications</h3><p>Notification add karo, edit karo, ya full details dekho</p></div>
+<div class="add-card">
+<h4><i class="fas fa-plus-circle"></i> <span id="notifFormTitle">Nayi Notification Add Karo</span></h4>
+<input type="hidden" id="editNotifId" value="">
+<div class="field"><label>Title *</label><input type="text" id="notifTitle" placeholder="e.g. Admission Open 2026-27"></div>
+<div class="field"><label>Description</label><textarea id="notifDesc" rows="3" placeholder="Details likhein..."></textarea></div>
+<div class="field"><label>PDF Link (Optional — Google Drive public link)</label><input type="text" id="notifPdf" placeholder="https://drive.google.com/file/d/..."></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<button class="btn" onclick="addNotif()"><i class="fas fa-save"></i> <span id="notifBtnText">Save Notification</span></button>
+<button class="btn btn-gray" onclick="cancelNotifEdit()" id="cancelNotifBtn" style="display:none;"><i class="fas fa-times"></i> Cancel</button>
+</div>
+</div>
+<div class="items" id="notifList"></div>
+</section>
+
+<section class="tab-p" id="tickerTab">
+<div class="p-hd"><h3><i class="fas fa-newspaper"></i> Latest News (Ticker)</h3><p>Scrolling news text jo homepage ke top pe dikhta hai</p></div>
+<div class="add-card">
+<h4><i class="fas fa-plus-circle"></i> <span id="tickerFormTitle">Nayi News Add Karo</span></h4>
+<input type="hidden" id="editTickerId" value="">
+<div class="field"><label>News Text *</label><textarea id="tickerTextInput" rows="3" placeholder="e.g. Admission Open for Session 2026-27"></textarea></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<button class="btn" onclick="addTicker()"><i class="fas fa-save"></i> <span id="tickerBtnText">Save News</span></button>
+<button class="btn btn-gray" onclick="cancelTickerEdit()" id="cancelTickerBtn" style="display:none;"><i class="fas fa-times"></i> Cancel</button>
+</div>
+</div>
+<div class="items" id="tickerList"></div>
+</section>
+
+<section class="tab-p" id="contactTab">
+<div class="p-hd"><h3><i class="fas fa-address-book"></i> Contact Information</h3><p>School ka address, phone, email update karo</p></div>
+<div class="add-card">
+<h4><i class="fas fa-plus-circle"></i> Nayi Contact Info Add Karo</h4>
+<div class="field"><label>Type</label>
+<select id="cType">
+<option value="address">Address</option>
+<option value="phone">Phone</option>
+<option value="email">Email</option>
+<option value="hours">Office Hours</option>
+<option value="location">Google Maps Link</option>
+</select>
+</div>
+<div class="field"><label>Label (heading)</label><input type="text" id="cLabel" placeholder="e.g. Address"></div>
+<div class="field"><label>Value (details)</label><textarea id="cValue" rows="3" placeholder="Details likhein..."></textarea></div>
+<button class="btn" onclick="addContact()"><i class="fas fa-save"></i> Save Contact Info</button>
+</div>
+<div class="items" id="contactList"></div>
+</section>
+
+</div>
+</div>
+
+<div class="modal-overlay" id="notifViewModal">
+<div class="modal-box">
+<button class="modal-close" onclick="closeNotifModal()"><i class="fas fa-times"></i></button>
+<h3 id="viewNotifTitle"></h3>
+<span class="mdate" id="viewNotifDate"></span>
+<p class="mdesc" id="viewNotifDesc"></p>
+<a href="#" id="viewNotifPdf" class="mpdf" target="_blank" style="display:none;"><i class="fas fa-file-pdf"></i> Open PDF</a>
+</div>
+</div>
+<script>
+/* ======================================================
+   CONFIGURATION — YAHAN APNI VALUES PASTE KARO
+   ====================================================== */
+const JSONBIN_BIN_ID='6abc30c5ffd5d160533cf375';
+const JSONBIN_KEY='$2a$10$DXrVAGa/2A5OlFaiokoUQe0PprUi6Tj7XPAlR6DybCtN01ZidF7zC';
+const JSONBIN_URL='https://api.jsonbin.io/v3/b/'+JSONBIN_BIN_ID;
+
+/* ======================================================
+   SECURITY — HASHED CREDENTIALS
+   ====================================================== */
+// Username: admin2026@
+// Password: chakghatbranch2026@#
+// NOTE: Ye hashes console se generate karke paste karo
+const ADMIN_USER_HASH='fa4d0ebb91f76aec0fed133a62472a96112dc054b8d4e69168c0d8c9d9342302';
+const ADMIN_PASS_HASH='a6963a1cc255c81c95818b67eb01363aad0ccd245cdd90041b02b4a32af5e93f';
+
+const MAX_ATTEMPTS=3;
+const LOCK_TIME=24*60*60*1000; // 24 hours
+const SESSION_TIMEOUT=30*60*1000; // 30 min
+
+/* ======================================================
+   DEFAULT DATA
+   ====================================================== */
+const DEFAULT_DATA={
+slides:[
+{id:1,title:"Welcome to Saint Mary Higher Secondary School",subtitle:"Best School in Chakghat Region",image:"images/photo 1.png"},
+{id:2,title:"Quality Education with Modern Facilities",subtitle:"Smart classrooms, well-equipped labs & experienced faculty",image:"images/photo 2.png"},
+{id:3,title:"Green Beautiful Campus",subtitle:"Join the best school of Chakghat-Rewa region",image:"images/photo 3.png"}
+],
+gallery:[
+{id:1,caption:"School Campus",image:"images/photo 1.png"},
+{id:2,caption:"School Campus",image:"images/photo 2.png"},
+{id:3,caption:"School Campus",image:"images/photo 3.png"},
+{id:4,caption:"School Event",image:"images/Event1.png"},
+{id:5,caption:"School Event",image:"images/Event2.png"}
+],
+notifications:[
+{id:1,title:"Admission Open for Session 2026-27",desc:"Admissions are open for all classes from Nursery to 12th. Apply now!",date:"01 Nov 2026",pdf:""}
+],
+contacts:[
+{id:1,type:"address",label:"Address",value:"Saint Mary H.S. School, Main Road, Chakghat, Tehsil - Teonthar, District - Rewa, Madhya Pradesh - 486226"},
+{id:2,type:"phone",label:"Phone",value:"+91 70006 64754"},
+{id:3,type:"email",label:"Email",value:"info@stmaryschoolchakghat.edu.in"},
+{id:4,type:"hours",label:"Office Hours",value:"Monday - Saturday, 8:00 AM - 4:00 PM"},
+{id:5,type:"location",label:"Location",value:"https://maps.app.goo.gl/sJoVn2mYnra8xJyAA"}
+]
+};
+
+let DB=JSON.parse(JSON.stringify(DEFAULT_DATA));
+let tickers=getData('sm_tickers',[
+{id:1,text:"Admission Open for Session 2026-27"},
+{id:2,text:"Annual Sports Day on 15th December"}
+]);
+let isSaving=false;
+
+/* ======================================================
+   SECURITY — AUTO LOGOUT ON REFRESH
+   ====================================================== */
+(function(){
+try{
+var navEntries=performance.getEntriesByType('navigation');
+if(navEntries.length&&navEntries[0].type==='reload'){
+sessionStorage.removeItem('sm_admin');
+sessionStorage.removeItem('sm_admin_login_time');
+}
+}catch(e){}
+})();
+
+/* ======================================================
+   UTILITY FUNCTIONS
+   ====================================================== */
+function getData(key,def){const s=localStorage.getItem(key);if(!s){localStorage.setItem(key,JSON.stringify(def));return def;}try{return JSON.parse(s);}catch(e){return def;}}
+function saveData(key,data){localStorage.setItem(key,JSON.stringify(data));}
+function convertDriveLink(url){
+if(!url)return url;url=url.trim();
+var m=url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+if(m)return 'https://lh3.googleusercontent.com/d/'+m[1];
+m=url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+if(m)return 'https://lh3.googleusercontent.com/d/'+m[1];
+return url;
+}
+function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function toast(msg,isErr){
+const t=document.getElementById('toast');
+t.textContent=msg;
+t.className='toast'+(isErr?' err':'');
+t.style.display='block';
+setTimeout(function(){t.style.display='none';},2500);
+}
+async function sha256(text){
+const encoder=new TextEncoder();
+const data=encoder.encode(text);
+const hashBuffer=await crypto.subtle.digest('SHA-256',data);
+const hashArray=Array.from(new Uint8Array(hashBuffer));
+return hashArray.map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+
+/* ======================================================
+   LOCK SYSTEM
+   ====================================================== */
+function getLockData(){try{return JSON.parse(localStorage.getItem('sm_lock')||'{}');}catch(e){return{};}}
+function setLockData(d){localStorage.setItem('sm_lock',JSON.stringify(d));}
+function isLocked(){
+var lock=getLockData();
+if(lock.lockedUntil&&Date.now()<lock.lockedUntil){
+return Math.ceil((lock.lockedUntil-Date.now())/60000);
+}
+return 0;
+}
+function recordFailedAttempt(){
+var lock=getLockData();
+lock.attempts=(lock.attempts||0)+1;
+if(lock.attempts>=MAX_ATTEMPTS){
+lock.lockedUntil=Date.now()+LOCK_TIME;
+lock.lockedAt=new Date().toISOString();
+lock.attempts=0;
+}
+setLockData(lock);
+return lock;
+}
+function clearLock(){localStorage.removeItem('sm_lock');}
+function showError(msg){
+var e=document.getElementById('errMsg');
+e.textContent=msg;
+e.classList.add('show');
+}
+
+/* ======================================================
+   DEVELOPER UNLOCK — admin.html?unlock=2026@stmary
+   ====================================================== */
+(function checkUnlock(){
+try{
+var params=new URLSearchParams(window.location.search);
+if(params.get('unlock')==='2026@stmary'){
+localStorage.removeItem('sm_lock');
+sessionStorage.removeItem('sm_admin');
+sessionStorage.removeItem('sm_admin_login_time');
+alert('✅ Admin panel unlocked! Please login.');
+window.history.replaceState({},document.title,window.location.pathname);
+}
+}catch(e){}
+})();
+
+/* ======================================================
+   LOGIN
+   ====================================================== */
+document.getElementById('loginForm').addEventListener('submit',async function(e){
+e.preventDefault();
+var errEl=document.getElementById('errMsg');
+errEl.classList.remove('show');
+errEl.textContent='';
+
+var lockMin=isLocked();
+if(lockMin>0){
+var hours=Math.floor(lockMin/60);
+var mins=lockMin%60;
+var timeText=hours>0?(hours+' hour'+(hours>1?'s':'')+(mins>0?' '+mins+' min':'')):(mins+' minutes');
+showError('🔒 Account locked! Too many failed attempts. Please try again after '+timeText+'.');
+document.getElementById('loginBtn').disabled=true;
+document.getElementById('loginBtn').innerHTML='<i class="fas fa-lock"></i> Locked';
+return;
+}
+
+var u=document.getElementById('username').value.trim();
+var p=document.getElementById('password').value;
+var btn=document.getElementById('loginBtn');
+btn.disabled=true;
+btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
+try{
+var uHash=await sha256(u);
+var pHash=await sha256(p);
+await new Promise(function(r){setTimeout(r,500);});
+
+if(uHash===ADMIN_USER_HASH&&pHash===ADMIN_PASS_HASH){
+clearLock();
+sessionStorage.setItem('sm_admin','1');
+sessionStorage.setItem('sm_admin_login_time',Date.now().toString());
+document.getElementById('username').value='';
+document.getElementById('password').value='';
+btn.disabled=false;
+btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Login';
+await showPanel();
+}else{
+var lock=recordFailedAttempt();
+var remaining=MAX_ATTEMPTS-(lock.attempts||0);
+btn.disabled=false;
+btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Login';
+if(lock.lockedUntil){
+showError('🔒 Too many failed attempts! Account locked for 24 hours.');
+btn.disabled=true;
+btn.innerHTML='<i class="fas fa-lock"></i> Locked';
+}else{
+showError('❌ You entered wrong ID/Password. '+(remaining>0?remaining+' attempts remaining.':''));
+}
+}
+}catch(err){
+btn.disabled=false;
+btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Login';
+showError('❌ Login error. Please try again.');
+}
+});
+
+/* ======================================================
+   SESSION CHECK
+   ====================================================== */
+async function showPanel(){
+if(sessionStorage.getItem('sm_admin')!=='1'){location.reload();return;}
+var loginTime=parseInt(sessionStorage.getItem('sm_admin_login_time')||'0');
+if(loginTime&&(Date.now()-loginTime)>SESSION_TIMEOUT){
+sessionStorage.removeItem('sm_admin');
+sessionStorage.removeItem('sm_admin_login_time');
+location.reload();
+return;
+}
+document.getElementById('loginWrap').style.display='none';
+document.getElementById('panel').classList.add('on');
+document.getElementById('panel').style.display='block';
+document.getElementById('sliderList').innerHTML='<div class="loading">⏳ Loading...</div>';
+await loadFromCloud();
+renderAll();
+}
+
+(function checkSession(){
+if(sessionStorage.getItem('sm_admin')==='1'){
+var loginTime=parseInt(sessionStorage.getItem('sm_admin_login_time')||'0');
+if(loginTime&&(Date.now()-loginTime)>SESSION_TIMEOUT){
+sessionStorage.removeItem('sm_admin');
+sessionStorage.removeItem('sm_admin_login_time');
+return;
+}
+showPanel();
+}
+})();
+
+function logout(){
+sessionStorage.removeItem('sm_admin');
+sessionStorage.removeItem('sm_admin_login_time');
+location.replace('index.html');
+}
+
+/* ======================================================
+   TABS
+   ====================================================== */
+document.querySelectorAll('.tab-b').forEach(function(b){
+b.addEventListener('click',function(){
+document.querySelectorAll('.tab-b').forEach(function(x){x.classList.remove('on');});
+document.querySelectorAll('.tab-p').forEach(function(x){x.classList.remove('on');});
+b.classList.add('on');
+var panel=document.getElementById(b.dataset.tab);
+if(panel)panel.classList.add('on');
+});
+});
+
+/* ======================================================
+   CLOUD SYNC
+   ====================================================== */
+async function loadFromCloud(){
+try{
+const r=await fetch(JSONBIN_URL+'/latest',{headers:{'X-Master-Key':JSONBIN_KEY,'X-Bin-Meta':'false'}});
+if(!r.ok)throw new Error('Load failed');
+const data=await r.json();
+if(data&&typeof data==='object'){
+DB={
+slides:Array.isArray(data.slides)&&data.slides.length?data.slides:DEFAULT_DATA.slides,
+gallery:Array.isArray(data.gallery)&&data.gallery.length?data.gallery:DEFAULT_DATA.gallery,
+notifications:Array.isArray(data.notifications)&&data.notifications.length?data.notifications:DEFAULT_DATA.notifications,
+contacts:Array.isArray(data.contacts)&&data.contacts.length?data.contacts:DEFAULT_DATA.contacts
+};
+if(Array.isArray(data.tickers)&&data.tickers.length){tickers=data.tickers;saveData('sm_tickers',tickers);}
+}
+}catch(e){console.warn('Cloud load failed',e);}
+}
+async function saveToCloud(){
+if(isSaving)return;
+isSaving=true;
+try{
+const r=await fetch(JSONBIN_URL,{
+method:'PUT',
+headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY},
+body:JSON.stringify({...DB,tickers:tickers})
+});
+if(!r.ok)throw new Error('Save failed');
+toast('✅ Saved! Sab devices pe update ho gaya');
+}catch(e){
+toast('❌ Save fail hua! Internet check karo',true);
+console.error(e);
+}
+isSaving=false;
+}
+
+/* ======================================================
+   SLIDER
+   ====================================================== */
+async function addSlide(){
+var t=document.getElementById('slideTitle').value.trim();
+var s=document.getElementById('slideSubtitle').value.trim();
+var img=document.getElementById('slideImage').value.trim();
+if(!t||!img){toast('❌ Title aur Image dono zaroori hain',true);return;}
+img=convertDriveLink(img);
+DB.slides.push({id:Date.now(),title:t,subtitle:s,image:img});
+document.getElementById('slideTitle').value='';
+document.getElementById('slideSubtitle').value='';
+document.getElementById('slideImage').value='';
+renderSlider();
+await saveToCloud();
+}
+async function deleteSlide(id){
+if(!confirm('Ye slide delete karni hai?'))return;
+DB.slides=DB.slides.filter(function(s){return s.id!==id;});
+renderSlider();
+await saveToCloud();
+}
+function renderSlider(){
+var c=document.getElementById('sliderList');
+if(!c)return;
+if(!DB.slides.length){c.innerHTML='<div class="empty">Koi slide nahi hai</div>';return;}
+c.innerHTML=DB.slides.map(function(s){
+return '<div class="item-row"><img src="'+esc(s.image)+'" class="item-thumb" onerror="this.src=\'https://via.placeholder.com/110x75/4c1d95/ffffff?text=No+Image\'"><div class="item-info"><h4>'+esc(s.title)+'</h4><p>'+esc(s.subtitle)+'</p></div><button class="btn btn-sm btn-red" onclick="deleteSlide('+s.id+')"><i class="fas fa-trash"></i> Delete</button></div>';
+}).join('');
+}
+
+/* ======================================================
+   GALLERY
+   ====================================================== */
+async function addGallery(){
+var c=document.getElementById('galCaption').value.trim();
+var img=document.getElementById('galImage').value.trim();
+if(!img){toast('❌ Image link zaroori hai',true);return;}
+img=convertDriveLink(img);
+DB.gallery.push({id:Date.now(),caption:c,image:img});
+document.getElementById('galCaption').value='';
+document.getElementById('galImage').value='';
+renderGallery();
+await saveToCloud();
+}
+async function deleteGallery(id){
+if(!confirm('Ye photo delete karni hai?'))return;
+DB.gallery=DB.gallery.filter(function(g){return g.id!==id;});
+renderGallery();
+await saveToCloud();
+}
+function renderGallery(){
+var c=document.getElementById('galleryList');
+if(!c)return;
+if(!DB.gallery.length){c.innerHTML='<div class="empty">Koi photo nahi hai</div>';return;}
+c.innerHTML=DB.gallery.map(function(g){
+return '<div class="item-card"><img src="'+esc(g.image)+'" onerror="this.src=\'https://via.placeholder.com/250x170/4c1d95/ffffff?text=No+Image\'"><div class="item-card-b"><p>'+esc(g.caption||'Untitled')+'</p><button class="btn btn-sm btn-red" onclick="deleteGallery('+g.id+')"><i class="fas fa-trash"></i> Delete</button></div></div>';
+}).join('');
+}
+
+/* ======================================================
+   NOTIFICATIONS
+   ====================================================== */
+async function addNotif(){
+var editId=document.getElementById('editNotifId').value;
+var t=document.getElementById('notifTitle').value.trim();
+var d=document.getElementById('notifDesc').value.trim();
+var pdf=document.getElementById('notifPdf').value.trim();
+if(!t){toast('❌ Title zaroori hai',true);return;}
+if(pdf)pdf=convertDriveLink(pdf);
+if(editId){
+DB.notifications=DB.notifications.map(function(n){if(String(n.id)===String(editId)){return{...n,title:t,desc:d,pdf:pdf||n.pdf||''};}return n;});
+clearNotifForm();
+renderNotifs();
+await saveToCloud();
+toast('✅ Notification update ho gayi!');
+}else{
+var date=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+DB.notifications.unshift({id:Date.now(),title:t,desc:d,date:date,pdf:pdf||''});
+clearNotifForm();
+renderNotifs();
+await saveToCloud();
+}
+}
+function clearNotifForm(){
+document.getElementById('editNotifId').value='';
+document.getElementById('notifTitle').value='';
+document.getElementById('notifDesc').value='';
+document.getElementById('notifPdf').value='';
+document.getElementById('notifBtnText').textContent='Save Notification';
+document.getElementById('notifFormTitle').textContent='Nayi Notification Add Karo';
+document.getElementById('cancelNotifBtn').style.display='none';
+}
+function editNotif(id){
+var n=DB.notifications.filter(function(x){return x.id===id;})[0];
+if(!n)return;
+document.getElementById('editNotifId').value=n.id;
+document.getElementById('notifTitle').value=n.title||'';
+document.getElementById('notifDesc').value=n.desc||'';
+document.getElementById('notifPdf').value=n.pdf||'';
+document.getElementById('notifBtnText').textContent='Update Notification';
+document.getElementById('notifFormTitle').textContent='Notification Edit Karo';
+document.getElementById('cancelNotifBtn').style.display='inline-flex';
+document.querySelector('.tabs-in').scrollIntoView({behavior:'smooth'});
+}
+function cancelNotifEdit(){clearNotifForm();}
+async function deleteNotif(id){
+if(!confirm('Ye notification delete karni hai?'))return;
+DB.notifications=DB.notifications.filter(function(n){return n.id!==id;});
+renderNotifs();
+await saveToCloud();
+}
+function viewNotif(id){
+var n=DB.notifications.filter(function(x){return x.id===id;})[0];
+if(!n)return;
+document.getElementById('viewNotifTitle').textContent=n.title||'';
+document.getElementById('viewNotifDate').innerHTML='<i class="fas fa-calendar"></i> '+(n.date||'');
+document.getElementById('viewNotifDesc').textContent=n.desc||'No description';
+var pdfBtn=document.getElementById('viewNotifPdf');
+if(n.pdf){pdfBtn.href=n.pdf;pdfBtn.style.display='inline-block';}else{pdfBtn.style.display='none';}
+document.getElementById('notifViewModal').classList.add('on');
+document.body.style.overflow='hidden';
+}
+function closeNotifModal(){
+document.getElementById('notifViewModal').classList.remove('on');
+document.body.style.overflow='';
+}
+function renderNotifs(){
+var c=document.getElementById('notifList');
+if(!c)return;
+if(!DB.notifications.length){c.innerHTML='<div class="empty">Koi notification nahi hai</div>';return;}
+c.innerHTML=DB.notifications.map(function(n){
+var pdfIcon=n.pdf?' <i class="fas fa-file-pdf" style="color:#dc2626;" title="PDF attached"></i>':'';
+return '<div class="item-row"><div class="item-info" style="cursor:pointer;" onclick="viewNotif('+n.id+')"><h4>'+esc(n.title)+pdfIcon+'</h4><p>'+esc(n.desc||'')+'</p><p style="color:#a8861f;font-weight:600;margin-top:4px;"><i class="fas fa-calendar"></i> '+esc(n.date||'')+'</p></div><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;"><button class="btn btn-sm btn-gold" onclick="viewNotif('+n.id+')"><i class="fas fa-eye"></i> View</button><button class="btn btn-sm btn-blue" onclick="editNotif('+n.id+')"><i class="fas fa-edit"></i> Edit</button><button class="btn btn-sm btn-red" onclick="deleteNotif('+n.id+')"><i class="fas fa-trash"></i> Delete</button></div></div>';
+}).join('');
+}
+
+/* ======================================================
+   TICKER
+   ====================================================== */
+async function addTicker(){
+var editId=document.getElementById('editTickerId').value;
+var t=document.getElementById('tickerTextInput').value.trim();
+if(!t){toast('❌ News text zaroori hai',true);return;}
+if(editId){
+tickers=tickers.map(function(x){if(String(x.id)===String(editId)){return{...x,text:t};}return x;});
+saveData('sm_tickers',tickers);
+clearTickerForm();
+renderTickers();
+await saveToCloud();
+toast('✅ News update ho gayi!');
+}else{
+tickers.push({id:Date.now(),text:t});
+saveData('sm_tickers',tickers);
+clearTickerForm();
+renderTickers();
+await saveToCloud();
+}
+}
+function clearTickerForm(){
+document.getElementById('editTickerId').value='';
+document.getElementById('tickerTextInput').value='';
+document.getElementById('tickerBtnText').textContent='Save News';
+document.getElementById('tickerFormTitle').textContent='Nayi News Add Karo';
+document.getElementById('cancelTickerBtn').style.display='none';
+}
+function editTicker(id){
+var t=tickers.filter(function(x){return x.id===id;})[0];
+if(!t)return;
+document.getElementById('editTickerId').value=t.id;
+document.getElementById('tickerTextInput').value=t.text||'';
+document.getElementById('tickerBtnText').textContent='Update News';
+document.getElementById('tickerFormTitle').textContent='News Edit Karo';
+document.getElementById('cancelTickerBtn').style.display='inline-flex';
+document.querySelector('.tabs-in').scrollIntoView({behavior:'smooth'});
+}
+function cancelTickerEdit(){clearTickerForm();}
+async function deleteTicker(id){
+if(!confirm('Ye news delete karni hai?'))return;
+tickers=tickers.filter(function(x){return x.id!==id;});
+saveData('sm_tickers',tickers);
+renderTickers();
+await saveToCloud();
+}
+function renderTickers(){
+var c=document.getElementById('tickerList');
+if(!c)return;
+if(!tickers.length){c.innerHTML='<div class="empty">Koi news nahi hai</div>';return;}
+c.innerHTML=tickers.map(function(t){
+return '<div class="item-row"><div class="item-info"><p style="font-size:14px;color:#1f2937;">📢 '+esc(t.text)+'</p></div><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;"><button class="btn btn-sm btn-blue" onclick="editTicker('+t.id+')"><i class="fas fa-edit"></i> Edit</button><button class="btn btn-sm btn-red" onclick="deleteTicker('+t.id+')"><i class="fas fa-trash"></i> Delete</button></div></div>';
+}).join('');
+}
+
+/* ======================================================
+   CONTACTS
+   ====================================================== */
+async function addContact(){
+var type=document.getElementById('cType').value;
+var label=document.getElementById('cLabel').value.trim();
+var value=document.getElementById('cValue').value.trim();
+if(!label||!value){toast('❌ Label aur Value dono zaroori hain',true);return;}
+DB.contacts.push({id:Date.now(),type:type,label:label,value:value});
+document.getElementById('cLabel').value='';
+document.getElementById('cValue').value='';
+renderContacts();
+await saveToCloud();
+}
+async function deleteContact(id){
+if(!confirm('Ye contact info delete karni hai?'))return;
+DB.contacts=DB.contacts.filter(function(c){return c.id!==id;});
+renderContacts();
+await saveToCloud();
+}
+function renderContacts(){
+var c=document.getElementById('contactList');
+if(!c)return;
+if(!DB.contacts.length){c.innerHTML='<div class="empty">Koi contact info nahi hai</div>';return;}
+c.innerHTML=DB.contacts.map(function(x){
+return '<div class="item-row"><div class="item-info"><h4>'+esc(x.label)+' <span style="font-size:11px;color:#94a3b8;font-weight:400;">('+esc(x.type)+')</span></h4><p>'+esc(x.value)+'</p></div><button class="btn btn-sm btn-red" onclick="deleteContact('+x.id+')"><i class="fas fa-trash"></i> Delete</button></div>';
+}).join('');
+}
+
+/* ======================================================
+   RENDER ALL
+   ====================================================== */
+function renderAll(){
+renderSlider();
+renderGallery();
+renderNotifs();
+renderTickers();
+renderContacts();
+}
+
+/* ======================================================
+   MODAL CLOSE
+   ====================================================== */
+document.getElementById('notifViewModal').addEventListener('click',function(e){
+if(e.target===this)closeNotifModal();
+});
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape')closeNotifModal();
+});
+
+/* ======================================================
+   DISABLE RIGHT CLICK + DEVTOOLS (Optional)
+   ====================================================== */
+document.addEventListener('contextmenu',function(e){
+// Right-click disable (optional)
+});
+document.addEventListener('keydown',function(e){
+if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&e.key==='I')||(e.ctrlKey&&e.shiftKey&&e.key==='J')||(e.ctrlKey&&e.key==='U')){
+e.preventDefault();
+return false;
+}
+});
+</script>
+</body>
+</html>
